@@ -98,3 +98,22 @@ http://dev.mysql.com/doc/refman/5.1/en/source-configuration-options.html
 12. ./bootstrap.sh
 13. CXX='gcc -static-libgcc' CC='gcc -static-libgcc' MYSQL_AUDIT_PLUGIN_VERSION=1.1.13 MYSQL_AUDIT_PLUGIN_REVISION=`svn info|grep ^Revision|awk -F ": " '{print $2}'` ./configure --enable-debug=no --with-mysql=mariadb-10.2.10 --with-mysql-libservices=mariadb-10.2.10/libservices/libmysqlservices.a
 14. gmake <======== This will create the plugin "libaudit_plugin.so"
+
+==== MySQL 5.7.43 by 老顾rafael ======
+steps:
+1. download: mysql-boost-5.7.43.tar.gz  mysql-audit-1.1.13.tar.gz  Python-2.7.18.tar.xz
+2. extract: mysql-5.7.43  mysql-audit-1.1.13  Python-2.7.18
+3. TODO need to verify the following commands. actually this step has been done by the client(Blank), i am not sure the detailed commands
+cd mysql_5.7.53
+cmake .
+make
+4. before executing the following commands, some source file should be modified to adapt kunpeng platform
+mysql-audit-1.1.13
+chmod +x bootstrap.sh
+./bootstrap.sh
+CXX='gcc -static-libgcc' CC='gcc -static-libgcc' ./configure --with-mysql=/root/mysql-5.7.43 --with-mysql-libservices=/usr/local/mysql/lib/libmysqlservices.a
+make
+
+file changed:
+1. ./configure.a，-std=c++03 -I/usr/local/mysql/include -Wno-error=class-memaccess
+2. ./src/hot_patch.cc
